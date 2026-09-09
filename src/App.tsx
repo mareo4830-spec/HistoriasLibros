@@ -110,11 +110,11 @@ function App() {
 
 
 
-// 1. Aquí termina tu bucle de fotos actual
-    }
+
+    
   }
 
-  // --- PEGA TUS BLOQUES AQUÍ MISMO ---
+
   if (videoFile) {
     await supabase.storage
       .from('memory-book-photos')
@@ -129,7 +129,7 @@ function App() {
 
   setIsSending(false);
   setIsSent(true);
-
+}
 
   const nextStep = () => {
   
