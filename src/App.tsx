@@ -125,12 +125,12 @@ const submitOrder = async () => {
     setIsSending(false);
     setIsSent(true);
   };
- }
+
   const nextStep = () => {
   
     const scrollPos = window.scrollY;
 
-  
+}  
     if (step === 1) {
       setStep(2);
     } else if (step === 2) {
