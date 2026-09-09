@@ -107,7 +107,7 @@ function App() {
         return;
       }
     }
-
+}
 
 
   if (videoFile) {
