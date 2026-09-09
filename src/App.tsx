@@ -45,6 +45,8 @@ function App() {
   const [isSent, setIsSent] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [videoFile, setVideoFile] = useState(null);
+  const [audioFile, setAudioFile] = useState(null);
 
   const photoUrls = useMemo(() => photos.map((photo) => URL.createObjectURL(photo)), [photos]);
 
@@ -105,27 +107,46 @@ function App() {
         return;
       }
     }
+if (uploadError) {
+      setError('El pedido se guardó, pero una foto no pudo subirse. Inténtalo de nuevo.');
+      setIsSending(false);
+      return;
+    }
+  }
 
-    setIsSending(false);
-    setIsSent(true);
-  };
+  // Pégalo justo aquí (línea 110):
+  if (videoFile) {
+    await supabase.storage
+      .from('memory-book-photos')
+      .upload(`${order.id}/video.mp4`, videoFile);
+  }
+
+  if (audioFile) {
+    await supabase.storage
+      .from('memory-book-photos')
+      .upload(`${order.id}/cancion.mp3`, audioFile);
+  }
+
+  setIsSending(false);
+  setIsSent(true);
+};
 
   const nextStep = () => {
+    // 1. Guardamos exactamente en qué píxel estás mirando ahora mismo
+    const scrollPos = window.scrollY;
+
+    // 2. Aquí va tu lógica de cambio de paso actual (ej: setStep(...))
     if (step === 1) {
-      if (!canContinue) {
-        setError('Escribe un correo válido para continuar.');
-        return;
-      }
       setStep(2);
     } else if (step === 2) {
       setStep(3);
-    } else {
-      void submitOrder();
     }
-    const scrollPosition = window.scrollY;
-  requestAnimationFrame(() => {
-    window.scrollTo({ top: scrollPosition, behavior: 'instant' });
-  });
+
+    // 3. Forzamos al navegador a mantener la posición exacta al instante
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollPos, behavior: 'instant' });
+    });
+  };
 
   const previousStep = () => {
     setStep((current) => (current === 1 ? 1 : (current - 1) as Step));
@@ -196,8 +217,89 @@ function StepOne({ form, updateForm }: { form: FormState; updateForm: (field: ke
   return <div className="step-content"><p className="step-kicker">Paso 01 / 03</p><h3>¿Qué quieres decirle?</h3><p className="step-description">Elige la ocasión que aparecerá en la primera página de tu libro.</p><label className="field-label" htmlFor="motive">Motivo del regalo</label><div className="select-wrap"><select id="motive" value={form.motive} onChange={(event) => updateForm('motive', event.target.value)}>{motives.map((motive) => <option key={motive}>{motive}</option>)}</select><ChevronDown size={17} /></div><label className="field-label" htmlFor="email">Tu correo electrónico</label><div className="input-wrap"><Mail size={17} /><input id="email" type="email" value={form.email} onChange={(event) => updateForm('email', event.target.value)} placeholder="tu@correo.com" /></div><p className="field-hint">Te enviaremos aquí la confirmación de tu pedido.</p></div>;
 }
 
-function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onRemove, isDragging, setIsDragging, fileInputRef }: { photos: File[]; dedication: string; onDedicationChange: (value: string) => void; onDrop: (event: DragEvent<HTMLDivElement>) => void; onChange: (event: ChangeEvent<HTMLInputElement>) => void; onRemove: (index: number) => void; isDragging: boolean; setIsDragging: (dragging: boolean) => void; fileInputRef: React.RefObject<HTMLInputElement> }) {
-  return <div className="step-content"><p className="step-kicker">Paso 02 / 03</p><h3>Llena sus páginas.</h3><p className="step-description">Sube los momentos que quieres volver a visitar. Puedes añadir hasta 30 fotos.</p><div className={`dropzone ${isDragging ? 'dragging' : ''}`} onDragOver={(event) => { event.preventDefault(); setIsDragging(true); }} onDragLeave={() => setIsDragging(false)} onDrop={onDrop} onClick={() => fileInputRef.current?.click()}><input ref={fileInputRef} type="file" accept="image/*" multiple onChange={onChange} hidden /><span className="upload-icon"><CloudUpload size={22} /></span><strong>Arrastra tus fotos aquí</strong><span>o haz clic para buscar en tu dispositivo</span><small>JPG, PNG o WEBP · Máximo 30 fotos</small></div><div className="photo-toolbar"><span><ImagePlus size={15} /> Tus recuerdos</span><strong>{photos.length} / 30 fotos</strong></div>{photos.length > 0 && <div className="photo-grid">{photos.map((photo, index) => <div className="photo-thumb" key={`${photo.name}-${index}`}><img src={URL.createObjectURL(photo)} alt={`Recuerdo ${index + 1}`} /><button type="button" aria-label={`Eliminar foto ${index + 1}`} onClick={(event) => { event.stopPropagation(); onRemove(index); }}><Trash2 size={13} /></button><span>{String(index + 1).padStart(2, '0')}</span></div>)}</div>}<label className="field-label" htmlFor="dedication">Una dedicatoria personal <span>Opcional</span></label><textarea id="dedication" maxLength={2000} value={dedication} onChange={(event) => onDedicationChange(event.target.value)} placeholder="Escribe unas palabras que quieras que acompañen sus recuerdos..." /></div>;
+function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onRemove, isDragging, setIsDragging, fileInputRef, onVideoChange, onAudioChange }) {
+  return (
+    <div className="step-content">
+      <p className="step-kicker">Paso 02 / 03</p>
+      <h3>Llena sus páginas.</h3>
+      <p className="step-description">Sube los recuerdos, el vídeo final y la canción para darle vida al libro.</p>
+      
+      {/* 1. ZONA DE FOTOS */}
+      <div 
+        className={`dropzone ${isDragging ? 'dragging' : ''}`}
+        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={onDrop}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          onChange={onChange} 
+          multiple 
+          accept="image/png, image/jpeg, image/webp" 
+          style={{ display: 'none' }} 
+        />
+        <div className="dropzone-content">
+          <Upload size={28} style={{ color: '#c5a059', marginBottom: '10px' }} />
+          <strong>Arrastra tus fotos aquí</strong> o haz clic para buscar
+          <span>JPG, PNG o WEBP · Máximo 30 fotos</span>
+        </div>
+      </div>
+
+      {/* Contador de fotos */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#8c7a6b', margin: '8px 0 20px 0' }}>
+        <span>Tus recuerdos</span>
+        <span>{photos.length} / 30 fotos</span>
+      </div>
+
+      {/* 2. DEDICATORIA */}
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
+          Una dedicatoria personal <span style={{ opacity: 0.6 }}>(Opcional)</span>
+        </label>
+        <textarea 
+          value={dedication} 
+          onChange={onDedicationChange}
+          placeholder="Escribe unas palabras que quieras que acompañen tus recuerdos..."
+          rows={3}
+          style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', resize: 'none', fontFamily: 'inherit', fontSize: '0.9rem' }}
+        />
+      </div>
+
+      {/* 3. VÍDEO Y MÚSICA MP3 */}
+      <div style={{ borderTop: '1px dashed #dfd3bd', paddingTop: '18px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        
+        {/* Subir Vídeo */}
+        <div>
+          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: '#4a3b32', fontSize: '0.85rem' }}>
+            📹 Sube tu vídeo para el final
+          </label>
+          <input 
+            type="file" 
+            accept="video/mp4,video/quicktime,video/webm"
+            onChange={onVideoChange}
+            style={{ width: '100%', padding: '8px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', fontSize: '0.8rem' }}
+          />
+        </div>
+
+        {/* Subir Canción MP3 */}
+        <div>
+          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: '#4a3b32', fontSize: '0.85rem' }}>
+            🎵 Canción en MP3 para el fondo del vídeo
+          </label>
+          <input 
+            type="file" 
+            accept="audio/mp3,audio/wav,audio/m4a"
+            onChange={onAudioChange}
+            style={{ width: '100%', padding: '8px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', fontSize: '0.8rem' }}
+          />
+        </div>
+
+      </div>
+
+    </div>
+  );
 }
 
 function StepThree({ form, photoCount }: { form: FormState; photoCount: number }) {
