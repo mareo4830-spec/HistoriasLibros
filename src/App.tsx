@@ -262,34 +262,42 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
         />
       </div>
 
-      {/* 3. VÍDEO Y MÚSICA MP3 */}
-      <div style={{ borderTop: '1px dashed #dfd3bd', paddingTop: '18px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+    {/* 3. VÍDEO Y MÚSICA MP3 */}
+      <div style={{ borderTop: '1px dashed #dfd3bd', paddingTop: '20px', marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
-        {/* Subir Vídeo */}
+        {/* Selector de Vídeo */}
         <div>
-          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: '#4a3b32', fontSize: '0.85rem' }}>
-            📹 Sube tu vídeo para el final
+          <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
+            📹 Sube tu vídeo para el final <span style={{ opacity: 0.6 }}>(Opcional)</span>
           </label>
-          <input 
-            type="file" 
-            accept="video/mp4,video/quicktime,video/webm"
-            onChange={onVideoChange}
-            style={{ width: '100%', padding: '8px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', fontSize: '0.8rem' }}
-          />
+          <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#faf6ee', border: '1px dashed #dfd3bd', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', color: '#4a3b32', transition: 'all 0.2s' }}>
+            <span style={{ fontWeight: '500' }}>{videoFile ? `Vídeo seleccionado: ${videoFile.name}` : 'Haz clic para seleccionar el vídeo (MP4)'}</span>
+            <input 
+              type="file" 
+              accept="video/mp4,video/quicktime,video/webm"
+              onChange={onVideoChange}
+              style={{ display: 'none' }}
+            />
+          </label>
         </div>
 
-        {/* Subir Canción MP3 */}
+        {/* Selector de Canción MP3 */}
         <div>
-          <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: '#4a3b32', fontSize: '0.85rem' }}>
-            🎵 Canción en MP3 para el fondo del vídeo
+          <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
+            🎵 Canción en MP3 para el fondo <span style={{ opacity: 0.6 }}>(Opcional)</span>
           </label>
-          <input 
-            type="file" 
-            accept="audio/mp3,audio/wav,audio/m4a"
-            onChange={onAudioChange}
-            style={{ width: '100%', padding: '8px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', fontSize: '0.8rem' }}
-          />
+          <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#faf6ee', border: '1px dashed #dfd3bd', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', color: '#4a3b32', transition: 'all 0.2s' }}>
+            <span style={{ fontWeight: '500' }}>{audioFile ? `Audio seleccionado: ${audioFile.name}` : 'Haz clic para seleccionar la canción (MP3)'}</span>
+            <input 
+              type="file" 
+              accept="audio/mp3,audio/wav,audio/m4a"
+              onChange={onAudioChange}
+              style={{ display: 'none' }}
+            />
+          </label>
         </div>
+
+      </div>
 
       </div>
 
