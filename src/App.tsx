@@ -122,8 +122,10 @@ function App() {
     } else {
       void submitOrder();
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    const scrollPosition = window.scrollY;
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: scrollPosition, behavior: 'instant' });
+  });
 
   const previousStep = () => {
     setStep((current) => (current === 1 ? 1 : (current - 1) as Step));
