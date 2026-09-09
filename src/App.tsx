@@ -237,7 +237,7 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
         />
         <div className="dropzone-content">
           <Upload size={28} style={{ color: '#c5a059', marginBottom: '10px' }} />
-          <strong>Arrastra tus fotos aquí</strong> o haz clic para buscar
+          haz clic para buscar y subir tus fotos
           <span>JPG, PNG o WEBP · Máximo 30 fotos</span>
         </div>
       </div>
