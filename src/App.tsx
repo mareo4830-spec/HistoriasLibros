@@ -262,10 +262,10 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
         />
       </div>
 
-    {/* 3. VÍDEO Y MÚSICA MP3 */}
-      <div style={{ borderTop: '1px dashed #dfd3bd', paddingTop: '20px', marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      {/* 3. VÍDEO Y MÚSICA MP3 */}
+      <div style={{ borderTop: '1px dashed #dfd3bd', paddingTop: '18px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
-        {/* Selector de Vídeo */}
+        {/* Subir Vídeo */}
         <div>
           <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
             📹 Sube tu vídeo para el final <span style={{ opacity: 0.6 }}>(Opcional)</span>
@@ -281,9 +281,9 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
           </label>
         </div>
 
-        {/* Selector de Canción MP3 */}
+        {/* Subir Canción MP3 */}
         <div>
-          <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
+        <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
             🎵 Canción en MP3 para el fondo <span style={{ opacity: 0.6 }}>(Opcional)</span>
           </label>
           <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#faf6ee', border: '1px dashed #dfd3bd', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', color: '#4a3b32', transition: 'all 0.2s' }}>
@@ -296,8 +296,6 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
             />
           </label>
         </div>
-
-      </div>
 
       </div>
 
