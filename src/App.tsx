@@ -125,7 +125,7 @@ const submitOrder = async () => {
     setIsSending(false);
     setIsSent(true);
   };
-
+ }
   const nextStep = () => {
   
     const scrollPos = window.scrollY;
@@ -318,5 +318,5 @@ function BookPreview({ photoUrls, activePage, setActivePage }: { photoUrls: stri
   const isCover = activePage === 0;
   return <div className="book-stage"><div className="book-shadow" /><div className={`book ${isCover ? 'show-cover' : 'show-page'}`}><div className="book-cover"><div className="cover-inner"><span className="cover-rule" /><BookOpen size={20} /><p>Un libro de</p><h3>Nuestra<br />historia</h3><span className="cover-ornament">✦</span><small>Recuerdos que viven</small></div></div><div className="book-page"><div className="page-paper">{photoUrls[activePage - 1] ? <img src={photoUrls[activePage - 1]} alt={`Página ${activePage}`} /> : <div className="empty-page"><Plus size={21} /><span>Tu próximo recuerdo</span></div>}<div className="page-caption"><span>página {String(activePage).padStart(2, '0')}</span><span>✦</span></div></div></div></div><div className="book-controls"><button type="button" onClick={previousPage} disabled={activePage === 0} aria-label="Página anterior"><ArrowLeft size={15} /></button><span>{isCover ? 'Portada' : `${activePage} / ${photoUrls.length || 1}`}</span><button type="button" onClick={nextPage} disabled={activePage === totalPages - 1} aria-label="Página siguiente"><ArrowRight size={15} /></button></div><div className="book-label"><span className="label-dot" /> {photoUrls.length ? `${photoUrls.length} ${photoUrls.length === 1 ? 'página creada' : 'páginas creadas'}` : 'Tu libro, aún por escribir'}</div></div>;
   }
-}
+
 export default App;
