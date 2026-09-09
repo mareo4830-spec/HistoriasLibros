@@ -107,12 +107,7 @@ function App() {
         return;
       }
     }
-if (uploadError) {
-      setError('El pedido se guardó, pero una foto no pudo subirse. Inténtalo de nuevo.');
-      setIsSending(false);
-      return;
-    }
-  }
+
 
 
   if (videoFile) {
