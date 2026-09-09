@@ -114,7 +114,7 @@ if (uploadError) {
     }
   }
 
-  // Pégalo justo aquí (línea 110):
+
   if (videoFile) {
     await supabase.storage
       .from('memory-book-photos')
@@ -132,17 +132,17 @@ if (uploadError) {
 };
 
   const nextStep = () => {
-    // 1. Guardamos exactamente en qué píxel estás mirando ahora mismo
+  
     const scrollPos = window.scrollY;
 
-    // 2. Aquí va tu lógica de cambio de paso actual (ej: setStep(...))
+  
     if (step === 1) {
       setStep(2);
     } else if (step === 2) {
       setStep(3);
     }
 
-    // 3. Forzamos al navegador a mantener la posición exacta al instante
+  
     requestAnimationFrame(() => {
       window.scrollTo({ top: scrollPos, behavior: 'instant' });
     });
@@ -211,7 +211,7 @@ if (uploadError) {
       <footer className="footer"><span>© 2024 Nuestra historia</span><span>Creado con calma y cariño</span><Heart size={14} fill="currentColor" /></footer>
     </main>
   );
-}
+
 
 function StepOne({ form, updateForm }: { form: FormState; updateForm: (field: keyof FormState, value: string) => void }) {
   return <div className="step-content"><p className="step-kicker">Paso 01 / 03</p><h3>¿Qué quieres decirle?</h3><p className="step-description">Elige la ocasión que aparecerá en la primera página de tu libro.</p><label className="field-label" htmlFor="motive">Motivo del regalo</label><div className="select-wrap"><select id="motive" value={form.motive} onChange={(event) => updateForm('motive', event.target.value)}>{motives.map((motive) => <option key={motive}>{motive}</option>)}</select><ChevronDown size={17} /></div><label className="field-label" htmlFor="email">Tu correo electrónico</label><div className="input-wrap"><Mail size={17} /><input id="email" type="email" value={form.email} onChange={(event) => updateForm('email', event.target.value)} placeholder="tu@correo.com" /></div><p className="field-hint">Te enviaremos aquí la confirmación de tu pedido.</p></div>;
