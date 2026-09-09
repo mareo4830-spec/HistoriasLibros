@@ -130,7 +130,7 @@ const submitOrder = async () => {
   
     const scrollPos = window.scrollY;
 
-}  
+  
     if (step === 1) {
       setStep(2);
     } else if (step === 2) {
@@ -207,7 +207,7 @@ const submitOrder = async () => {
     </main>
   );
 
-
+}
 function StepOne({ form, updateForm }: { form: FormState; updateForm: (field: keyof FormState, value: string) => void }) {
   return <div className="step-content"><p className="step-kicker">Paso 01 / 03</p><h3>¿Qué quieres decirle?</h3><p className="step-description">Elige la ocasión que aparecerá en la primera página de tu libro.</p><label className="field-label" htmlFor="motive">Motivo del regalo</label><div className="select-wrap"><select id="motive" value={form.motive} onChange={(event) => updateForm('motive', event.target.value)}>{motives.map((motive) => <option key={motive}>{motive}</option>)}</select><ChevronDown size={17} /></div><label className="field-label" htmlFor="email">Tu correo electrónico</label><div className="input-wrap"><Mail size={17} /><input id="email" type="email" value={form.email} onChange={(event) => updateForm('email', event.target.value)} style={{ fontSize: '16px' }} placeholder="tu@correo.com" /></div><p className="field-hint">Te enviaremos aquí la confirmación de tu pedido.</p></div>;
 }
