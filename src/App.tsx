@@ -129,7 +129,7 @@ function App() {
 
   setIsSending(false);
   setIsSent(true);
-}
+};
 
   const nextStep = () => {
   
