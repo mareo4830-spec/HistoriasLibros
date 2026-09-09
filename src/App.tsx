@@ -81,9 +81,10 @@ function App() {
 
   const canContinue = form.email.trim().includes('@');
 
-  const submitOrder = async () => {
+const submitOrder = async () => {
     setIsSending(true);
     setError('');
+    
     const { data: order, error: insertError } = await supabase
       .from('memory_book_orders')
       .insert({ email: form.email.trim(), motive: form.motive, dedication: form.dedication.trim(), photo_count: photos.length })
@@ -101,6 +102,7 @@ function App() {
       const { error: uploadError } = await supabase.storage
         .from('memory-book-photos')
         .upload(`${order.id}/${String(index + 1).padStart(2, '0')}.${extension}`, photo, { upsert: false });
+      
       if (uploadError) {
         setError('El pedido se guardó, pero una foto no pudo subirse. Inténtalo de nuevo.');
         setIsSending(false);
@@ -108,28 +110,21 @@ function App() {
       }
     }
 
+    if (videoFile) {
+      await supabase.storage
+        .from('memory-book-photos')
+        .upload(`${order.id}/video.mp4`, videoFile);
+    }
 
+    if (audioFile) {
+      await supabase.storage
+        .from('memory-book-photos')
+        .upload(`${order.id}/cancion.mp3`, audioFile);
+    }
 
-
-    
-  }
-
-
-  if (videoFile) {
-    await supabase.storage
-      .from('memory-book-photos')
-      .upload(`${order.id}/video.mp4`, videoFile);
-  }
-
-  if (audioFile) {
-    await supabase.storage
-      .from('memory-book-photos')
-      .upload(`${order.id}/cancion.mp3`, audioFile);
-  }
-
-  setIsSending(false);
-  setIsSent(true);
-};
+    setIsSending(false);
+    setIsSent(true);
+  };
 
   const nextStep = () => {
   
