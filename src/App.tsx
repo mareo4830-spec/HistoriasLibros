@@ -258,7 +258,7 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
           onChange={onDedicationChange}
           placeholder="Escribe unas palabras que quieras que acompañen tus recuerdos..."
           rows={3}
-          style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', resize: 'none', fontFamily: 'inherit', fontSize: '0.9rem' }}
+          style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', resize: 'none', fontFamily: 'inherit', fontSize: '16px' }}
         />
       </div>
 
@@ -268,7 +268,7 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
         {/* Subir Vídeo */}
         <div>
           <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
-            📹 Sube tu vídeo para el final <span style={{ opacity: 0.6 }}>(Opcional)</span>
+            <h3>Sube tu vídeo para el final </h3><span style={{ opacity: 0.6 }}>(Opcional)</span>
           </label>
           <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#faf6ee', border: '1px dashed #dfd3bd', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', color: '#4a3b32', transition: 'all 0.2s' }}>
             <span style={{ fontWeight: '500' }}>{videoFile ? `Vídeo seleccionado: ${videoFile.name}` : 'Haz clic para seleccionar el vídeo (MP4)'}</span>
@@ -284,7 +284,7 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
         {/* Subir Canción MP3 */}
         <div>
         <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
-            🎵 Canción en MP3 para el fondo <span style={{ opacity: 0.6 }}>(Opcional)</span>
+           <h3> Canción en MP3 para el fondo </h3><span style={{ opacity: 0.6 }}>(Opcional)</span>
           </label>
           <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#faf6ee', border: '1px dashed #dfd3bd', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', color: '#4a3b32', transition: 'all 0.2s' }}>
             <span style={{ fontWeight: '500' }}>{audioFile ? `Audio seleccionado: ${audioFile.name}` : 'Haz clic para seleccionar la canción (MP3)'}</span>
