@@ -126,12 +126,7 @@ const submitOrder = async () => {
     setIsSent(true);
   };
 
-  const nextStep = () => {
-  
-    const scrollPos = window.scrollY;
-
-  
-    const nextStep = () => {
+const nextStep = () => {
     const scrollPos = window.scrollY;
 
     if (step === 1) {
@@ -140,12 +135,6 @@ const submitOrder = async () => {
       setStep(3);
     }
 
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: scrollPos, behavior: 'instant' });
-    });
-  };
-
-  
     requestAnimationFrame(() => {
       window.scrollTo({ top: scrollPos, behavior: 'instant' });
     });
