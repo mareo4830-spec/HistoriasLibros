@@ -228,87 +228,76 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
       <h3>Llena sus páginas.</h3>
       <p className="step-description">Sube los recuerdos, el vídeo final y la canción para darle vida al libro.</p>
       
-      {/* 1. ZONA DE FOTOS */}
-      <div 
-        className={`dropzone ${isDragging ? 'dragging' : ''}`}
-        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-        onDragLeave={() => setIsDragging(false)}
-        onDrop={onDrop}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          onChange={onChange} 
-          multiple 
-          accept="image/png, image/jpeg, image/webp" 
-          style={{ display: 'none' }} 
-        />
-        <div className="dropzone-content">
-          <Upload size={28} style={{ color: '#c5a059', marginBottom: '10px' }} />
-          haz clic para buscar y subir tus fotos
-          <span>JPG, PNG o WEBP · Máximo 30 fotos</span>
-        </div>
-      </div>
-
-      {/* Contador de fotos */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#8c7a6b', margin: '8px 0 20px 0' }}>
-        <span>Tus recuerdos</span>
-        <span>{photos.length} / 30 fotos</span>
-      </div>
-
-      {/* 2. DEDICATORIA */}
-      <div style={{ marginBottom: '20px' }}>
-        <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
-          Una dedicatoria personal <span style={{ opacity: 0.6 }}>(Opcional)</span>
-        </label>
-        <textarea 
-          value={dedication} 
-          onChange={onDedicationChange}
-          placeholder="Escribe unas palabras que quieras que acompañen tus recuerdos..."
-          rows={3}
-          style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid #dfd3bd', borderRadius: '4px', resize: 'none', fontFamily: 'inherit', fontSize: '16px' }}
-        />
-      </div>
-
-      {/* 3. VÍDEO Y MÚSICA MP3 */}
-      <div style={{ borderTop: '1px dashed #dfd3bd', paddingTop: '18px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        
-        {/* Subir Vídeo */}
-        <div>
-          <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
-            <h3>Sube tu vídeo para el final </h3><span style={{ opacity: 0.6 }}>(Opcional)</span>
-          </label>
-          <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#faf6ee', border: '1px dashed #dfd3bd', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', color: '#4a3b32', transition: 'all 0.2s' }}>
-            <span style={{ fontWeight: '500' }}>{videoFile ? `Vídeo seleccionado: ${videoFile.name}` : 'Haz clic para seleccionar el vídeo (MP4)'}</span>
-            <input 
-              type="file" 
-              accept="video/mp4,video/quicktime,video/webm"
-              onChange={onVideoChange}
-              style={{ display: 'none' }}
-            />
-          </label>
-        </div>
-
-        {/* Subir Canción MP3 */}
-        <div>
-        <label style={{ display: 'block', fontSize: '0.85rem', color: '#4a3b32', marginBottom: '6px', fontWeight: '500' }}>
-           <h3> Canción en MP3 para el fondo </h3><span style={{ opacity: 0.6 }}>(Opcional)</span>
-          </label>
-          <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#faf6ee', border: '1px dashed #dfd3bd', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', color: '#4a3b32', transition: 'all 0.2s' }}>
-            <span style={{ fontWeight: '500' }}>{audioFile ? `Audio seleccionado: ${audioFile.name}` : 'Haz clic para seleccionar la canción (MP3)'}</span>
-            <input 
-              type="file" 
-              accept="audio/mp3,audio/wav,audio/m4a"
-              onChange={onAudioChange}
-              style={{ display: 'none' }}
-            />
-          </label>
-        </div>
-
-      </div>
-
+      <div>
+    <h3 className="font-serif text-3xl md:text-4xl text-[#3e2a14] tracking-tight mb-1">
+      Sube tus fotos
+    </h3>
+    <p className="text-[13px] text-[#8c7d70] mb-3">
+      (Recomendado)
+    </p>
+    <div 
+      className={`border border-dashed border-[#c6b8a7] rounded-md py-5 px-4 text-center cursor-pointer transition-colors ${isDragging ? 'bg-[#f2ebe1] border-[#3e2a14]' : 'hover:bg-[#f2ebe1]'}`}
+      onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+      onDragLeave={() => setIsDragging(false)}
+      onDrop={onDrop}
+      onClick={() => fileInputRef.current?.click()}
+    >
+      <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={onChange} />
+      <span className="text-[14px] text-[#3e2a14] font-medium">
+        Haz clic para seleccionar las fotos (JPG/PNG)
+      </span>
     </div>
+  </div>
+
+  {/* 2. APARTADO DE DEDICATORIA */}
+  <div>
+    <h3 className="font-serif text-3xl md:text-4xl text-[#3e2a14] tracking-tight mb-1">
+      Escribe tu dedicatoria
+    </h3>
+    <p className="text-[13px] text-[#8c7d70] mb-3">
+      (Opcional)
+    </p>
+    <textarea 
+      className="w-full border border-dashed border-[#c6b8a7] rounded-md py-4 px-4 bg-transparent text-[14px] text-[#3e2a14] placeholder:text-[#a09385] focus:outline-none focus:ring-1 focus:ring-[#3e2a14] focus:border-solid resize-none min-h-[100px]" 
+      placeholder="Escribe aquí unas palabras..."
+      value={dedication}
+      onChange={(e) => onDedicationChange(e.target.value)}
+    ></textarea>
+  </div>
+
+  {/* 3. APARTADO DE VÍDEO */}
+  <div>
+    <h3 className="font-serif text-3xl md:text-4xl text-[#3e2a14] tracking-tight mb-1">
+      Sube tu vídeo para el final
+    </h3>
+    <p className="text-[13px] text-[#8c7d70] mb-3">
+      (Opcional)
+    </p>
+    <label className="block border border-dashed border-[#c6b8a7] rounded-md py-4 px-4 text-center cursor-pointer hover:bg-[#f2ebe1] transition-colors">
+      <input type="file" accept="video/mp4" className="hidden" onChange={onVideoChange} />
+      <span className="text-[14px] text-[#3e2a14] font-medium">
+        {videoFile ? videoFile.name : 'Haz clic para seleccionar el vídeo (MP4)'}
+      </span>
+    </label>
+  </div>
+
+  {/* 4. APARTADO DE CANCIÓN */}
+  <div>
+    <h3 className="font-serif text-3xl md:text-4xl text-[#3e2a14] tracking-tight mb-1">
+      Elige vuestra canción
+    </h3>
+    <p className="text-[13px] text-[#8c7d70] mb-3">
+      (Opcional)
+    </p>
+    <label className="block border border-dashed border-[#c6b8a7] rounded-md py-4 px-4 text-center cursor-pointer hover:bg-[#f2ebe1] transition-colors">
+      <input type="file" accept="audio/mp3" className="hidden" onChange={onAudioChange} />
+      <span className="text-[14px] text-[#3e2a14] font-medium">
+        {audioFile ? audioFile.name : 'Haz clic para seleccionar la canción (MP3)'}
+      </span>
+    </label>
+  </div>
+
+</div>
   );
 }
 
