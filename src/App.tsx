@@ -197,7 +197,7 @@ const submitOrder = async () => {
                 {[1, 2, 3].map((number) => <div className={`step-item ${step >= number ? 'active' : ''}`} key={number}><span>{step > number ? <Check size={14} /> : number}</span><small>{number === 1 ? 'Datos' : number === 2 ? 'Recuerdos' : 'Enviar'}</small></div>)}
               </div>
               {step === 1 && <StepOne form={form} updateForm={updateForm} />}
-              {step === 2 && <StepTwo photos={photos} dedication={form.dedication} onDedicationChange={(value) => updateForm('dedication', value)} onDrop={handleDrop} onChange={handleFileChange} onRemove={removePhoto} isDragging={isDragging} setIsDragging={setIsDragging} fileInputRef={fileInputRef} />}
+              {step === 2 && <StepTwo photos={photos} dedication={form.dedication} onDedicationChange={(value) => updateForm('dedication', value)} onDrop={handleDrop} onChange={handleFileChange} onRemove={removePhoto} isDragging={isDragging} setIsDragging={setIsDragging} fileInputRef={fileInputRef} videoFile={videoFile} audioFile={audioFile} onVideoChange={handleVideoChange} onAudioChange={handleAudioChange} />}
               {step === 3 && <StepThree form={form} photoCount={photos.length} />}
               {error && <div className="error-message"><X size={15} /> {error}</div>}
               <div className="form-actions">
