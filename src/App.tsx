@@ -131,11 +131,19 @@ const submitOrder = async () => {
     const scrollPos = window.scrollY;
 
   
+    const nextStep = () => {
+    const scrollPos = window.scrollY;
+
     if (step === 1) {
       setStep(2);
     } else if (step === 2) {
       setStep(3);
     }
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollPos, behavior: 'instant' });
+    });
+  };
 
   
     requestAnimationFrame(() => {
