@@ -244,7 +244,7 @@ function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onR
     >
       <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={onChange} />
       <span className="text-[14px] text-[#3e2a14] font-medium">
-        Haz clic para seleccionar las fotos (JPG/PNG)(max 30)
+        Haz clic para seleccionar las fotos (JPG/PNG)<span>(max 30)</span>
       </span>
     </div>
   </div>
