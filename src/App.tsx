@@ -209,7 +209,7 @@ function StepOne({ form, updateForm }: { form: FormState; updateForm: (field: ke
   return <div className="step-content"><p className="step-kicker">Paso 01 / 03</p><h3>¿Qué quieres decirle?</h3><p className="step-description">Elige la ocasión que aparecerá en la primera página de tu libro.</p><label className="field-label" htmlFor="motive">Motivo del regalo</label><div className="select-wrap"><select id="motive" value={form.motive} onChange={(event) => updateForm('motive', event.target.value)}>{motives.map((motive) => <option key={motive}>{motive}</option>)}</select><ChevronDown size={17} /></div><label className="field-label" htmlFor="email">Tu correo electrónico</label><div className="input-wrap"><Mail size={17} /><input id="email" type="email" value={form.email} onChange={(event) => updateForm('email', event.target.value)} style={{ fontSize: '16px' }} placeholder="tu@correo.com" /></div><p className="field-hint">Te enviaremos aquí la confirmación de tu pedido.</p></div>;
 }
 
-function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onRemove, isDragging, setIsDragging, fileInputRef, onVideoChange, onAudioChange }) {
+function StepTwo({ photos, dedication, onDedicationChange, onDrop, onChange, onRemove, isDragging, setIsDragging, fileInputRef, videoFile, audioFile, onVideoChange, onAudioChange }) {
   return (
     <div className="step-content">
       <p className="step-kicker">Paso 02 / 03</p>
