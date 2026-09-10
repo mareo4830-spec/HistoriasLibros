@@ -126,7 +126,19 @@ const submitOrder = async () => {
     setIsSent(true);
   };
 
-const nextStep = () => {
+const handleVideoChange = (e: any) => {
+  if (e.target.files && e.target.files[0]) {
+    setVideoFile(e.target.files[0]);
+  }
+};
+
+const handleAudioChange = (e: any) => {
+  if (e.target.files && e.target.files[0]) {
+    setAudioFile(e.target.files[0]);
+  }
+};
+
+  const nextStep = () => {
     const scrollPos = window.scrollY;
 
     if (step === 1) {
