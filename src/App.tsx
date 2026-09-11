@@ -138,13 +138,23 @@ const handleAudioChange = (e: any) => {
   }
 };
 
-  const nextStep = () => {
+const nextStep = () => {
     const scrollPos = window.scrollY;
 
     if (step === 1) {
+      // Validación del correo del paso 1
+      if (!form.email || !form.email.includes('@')) {
+        setError('Por favor, introduce un correo electrónico válido.');
+        return;
+      }
+      setError('');
       setStep(2);
     } else if (step === 2) {
+      // Salto del paso 2 al 3
       setStep(3);
+    } else if (step === 3) {
+      // ¡El remate final! Si estamos en el paso 3, enviamos los datos
+      submitOrder(); 
     }
 
     requestAnimationFrame(() => {
